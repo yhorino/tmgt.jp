@@ -7,8 +7,8 @@ if (!isset($_SERVER['HTTP_REFERER']) || $_SERVER['HTTP_REFERER'] !== 'https://ww
  */
 
 // スパム対策　入力チェック
-//$publicHtmlPath = str_replace('/private_html', '/public_html', $_SERVER['DOCUMENT_ROOT']);
-//include $publicHtmlPath.'/validateRequiredFields.php';
+$publicHtmlPath = str_replace('/private_html', '/public_html', $_SERVER['DOCUMENT_ROOT']);
+include $publicHtmlPath.'/validateRequiredFields.php';
 
 if (!empty($_SERVER['HTTP_REFERER'])) {
     // リファラの値
@@ -37,20 +37,14 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
 }
 
     // スパム対策　入力チェック
-    /*
     $requiredFields = [
-      'syokusyu',
       'your-name',
-      'your-furigana',
-      'your-birthday',
-      'your-address',
       'your-email',
-      'your-tel'
+      'your-shitsumon'
     ];
     if (!validateRequiredFields($requiredFields, $_POST)) {
       exit(SPAM_ERR_MSG);
     }
-*/
 // // 送信先のメールアドレス
 $from = 'recruitment@tmgt.jp';
 
