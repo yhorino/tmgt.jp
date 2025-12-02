@@ -49,40 +49,35 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
 $from = 'recruitment@tmgt.jp';
 
 // フォームから送信されたデータを取得
-$name = $_POST['your-name'];
-$email = $_POST['your-email'];
-$shitsumon = $_POST['your-shitsumon'];
+$syubetsu = htmlspecialchars($_POST['syubetsu']);
+$name = htmlspecialchars($_POST['your-name']);
+$email = htmlspecialchars($_POST['your-email']);
+$shitsumon = htmlspecialchars($_POST['your-shitsumon']);
 
-// メールの件名
-$subject = '【株式会社TMGT】お問い合わせありがとうございます';
+if($syubetsu === '採用について') {
+    // メールの件名
+    $subject = '【株式会社TMGT】お問い合わせありがとうございます';
 
-// メールの本文
-$message = "$name 様\n";
-$message .= "\n";
-$message .= "この度は、株式会社TMGTへお問い合わせいただき、誠にありがとうございます。\n";
-$message .= "\n";
-$message .= "以下の内容でお問い合わせを承りました。\n";
-$message .= "\n";
-$message .= "-----------------------\n";
-$message .= "お名前：$name\n";
-$message .= "メールアドレス：$email\n";
-$message .= "お問い合わせ内容：\n";
-$message .= "$shitsumon\n";
-$message .= "-----------------------\n";
-$message .= "\n";
-$message .= "※このメールは自動返信メールです。\n";
-$message .= "※本メールに心当たりのない場合は、誠にお手数ですが下記連絡先までご連絡ください。\n";
-$message .= "\n";
-$message .= "=================================\n";
-$message .= "　株式会社ＴＭＧＴ\n";
-$message .= "\n";
-$message .= "　〒486-0945　\n";
-$message .= "　愛知県春日井市勝川町六丁目140番地\n";
-$message .= "　王子不動産勝川ビル2F\n";
-$message .= "    TEL：0120-313-818\n";
-$message .= "    Email：recruitment@tmgt.jp\n";
-$message .= "    公式サイト：https://www.tmgt.jp/\n";
-$message .= "=================================\n";
+    // メール文面をバッファリング
+    ob_start();
+
+    include 'tm_sendmail_contact_mailtext_saiyo.php';
+
+    // メールの本文
+    $message = ob_get_clean();
+}
+if($syubetsu === '業務提携') {
+    // メールの件名
+    $subject = '【株式会社TMGT】業務提携に関する労災保険のご確認';
+
+    // メール文面をバッファリング
+    ob_start();
+
+    include 'tm_sendmail_contact_mailtext_teikei.php';
+
+    // メールの本文
+    $message = ob_get_clean();
+}
 
 // 添付ファイルの処理
 $boundary = md5(uniqid(time()));
