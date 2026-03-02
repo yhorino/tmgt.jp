@@ -54,18 +54,7 @@ $name = htmlspecialchars($_POST['your-name']);
 $email = htmlspecialchars($_POST['your-email']);
 $shitsumon = htmlspecialchars($_POST['your-shitsumon']);
 
-if($syubetsu === '採用について') {
-    // メールの件名
-    $subject = '【株式会社TMGT】お問い合わせありがとうございます';
 
-    // メール文面をバッファリング
-    ob_start();
-
-    include 'tm_sendmail_contact_mailtext_saiyo.php';
-
-    // メールの本文
-    $message = ob_get_clean();
-}
 if($syubetsu === '業務提携') {
     // メールの件名
     $subject = '【株式会社TMGT】業務提携に関する労災保険のご確認';
@@ -74,6 +63,17 @@ if($syubetsu === '業務提携') {
     ob_start();
 
     include 'tm_sendmail_contact_mailtext_teikei.php';
+
+    // メールの本文
+    $message = ob_get_clean();
+} else {
+    // メールの件名
+    $subject = '【株式会社TMGT】お問い合わせありがとうございます';
+
+    // メール文面をバッファリング
+    ob_start();
+
+    include 'tm_sendmail_contact_mailtext_saiyo.php';
 
     // メールの本文
     $message = ob_get_clean();
